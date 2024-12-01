@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Template;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : BaseCharacter ,IEvents
 {
     [Header("Player")]
     public BaseMovement mover;
+    public BaseInventory inventory;
     public PlayerInput playerInput;
     public Camera cam;
 
@@ -82,13 +84,36 @@ public class Player : BaseCharacter ,IEvents
     private void InitComponents()
     {
         mover.Init();
+        inventory.Init();
         cam.transform.localEulerAngles = Vector3.zero;
     }
 
     public void HandleKeyDownInput(KeyCode key)
     {
+        if(key == KeyCode.E)
+        {
+            if(inventory.IsThereEmptySlot() == true) // holding nothing
+            {
+                BaseItem targetItem = null;
 
+                BaseInventory targetInventory = null;
 
+                foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+                {
+                    if(hit.collider.GetComponent<Player>() == this) continue;
+
+                    if(targetItem == null) hit.collider.TryGetComponent(out targetItem);
+
+                    if(targetInventory == null) hit.collider.TryGetComponent(out targetInventory);
+                }
+
+                if(targetItem != null && targetInventory != null)
+                {
+                    TransferManager.instance.Transfer(targetItem, targetInventory, inventory);
+                }
+            }
+     
+        }
     }
     public void HandleKeyUpInput(KeyCode key)
     {
