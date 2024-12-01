@@ -82,6 +82,7 @@ public class Player : BaseCharacter ,IEvents
     private void InitComponents()
     {
         mover.Init();
+        cam.transform.localEulerAngles = Vector3.zero;
     }
 
     public void HandleKeyDownInput(KeyCode key)
