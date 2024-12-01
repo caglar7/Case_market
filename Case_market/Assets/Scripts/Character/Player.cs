@@ -116,14 +116,12 @@ public class Player : BaseCharacter ,IEvents
         DeActivateUpdate();
         playerInput.UnRegisterToInputEvents();
         CursorUtility.AdjustForUI();
-        Debug.Log("AdjustForUIMode");
     }
     private void AdjustForPlayerMode()
     {
         ActivateUpdate();
         playerInput.RegisterToInputEvents();
         CursorUtility.AdjustForPlayer();
-        Debug.Log("AdjustForPlayerMode");
     }
 
 
@@ -134,7 +132,7 @@ public class Player : BaseCharacter ,IEvents
             TryCollectAndDrop();
         }
 
-        if(key == KeyCode.Escape)
+        if(key == KeyCode.Q)
         {
             UIManager.instance.SwitchCanvas(CanvasType.Menu);
         }
@@ -169,7 +167,7 @@ public class Player : BaseCharacter ,IEvents
 
         if (targetItem != null && targetInventory != null)
         {
-            TransferManager.instance.Transfer(targetItem, targetInventory, inventory);
+            TransferManager.instance.Transfer(targetItem, targetInventory, inventory, true);
         }
     }
 
@@ -184,7 +182,7 @@ public class Player : BaseCharacter ,IEvents
             {
                 BaseItem itemHolded = inventory.LastAddedItem;
 
-                TransferManager.instance.Transfer(itemHolded, inventory, targetInv);
+                TransferManager.instance.Transfer(itemHolded, inventory, targetInv, true);
 
                 break;
             }

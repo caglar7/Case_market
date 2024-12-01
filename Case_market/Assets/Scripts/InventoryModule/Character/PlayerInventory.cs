@@ -7,7 +7,7 @@ public class PlayerInventory : BaseInventory
 {
     public Transform itemHolder;
 
-    public override void HandleItemAdded(BaseItem item)
+    public override void HandleItemAdded(BaseItem item, bool animate = false)
     {
         item.transform.SetParent(itemHolder);
 

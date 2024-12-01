@@ -4,25 +4,16 @@ using Template;
 
 public class ObjectCreator : Singleton<ObjectCreator> 
 {
-    public PoolObject product1;
-    public PoolObject product2;
-    public PoolObject product3;
-    public PoolObject box;
+    public PoolObject boxPool;
 
     private PoolingPattern _poolCached;
 
-    public BaseItem CreateProduct1()
+    public BaseItem CreateProduct(ProductData productData)
     {
-        return product1.poolingPattern.PullObjFromPool<Product>();
+        _poolCached = productData.poolObject.poolingPattern;
+        return _poolCached.PullObjFromPool<Product>();
     }
-    public BaseItem CreateProduct2()
-    {
-        return product2.poolingPattern.PullObjFromPool<Product>();
-    }
-    public BaseItem CreateProduct3()
-    {
-       return product3.poolingPattern.PullObjFromPool<Product>(); 
-    }
+
     public void Remove(BaseItem item)
     {
         _poolCached = item.itemData.poolObject.poolingPattern;
@@ -30,13 +21,12 @@ public class ObjectCreator : Singleton<ObjectCreator>
     }
 
 
-
     public Box CreateBox()
     {
-       return box.poolingPattern.PullObjFromPool<Box>(); 
+       return boxPool.poolingPattern.PullObjFromPool<Box>(); 
     }
     public void Remove(Box boxToRemove)
     {
-        box.poolingPattern.AddObjToPool(boxToRemove.gameObject);
+        boxPool.poolingPattern.AddObjToPool(boxToRemove.gameObject);
     }
 }

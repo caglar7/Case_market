@@ -34,7 +34,7 @@ public class BaseInventory : MonoBehaviour, IModuleInit
         }
     }
 
-    public bool TryAddItem(BaseItem item)
+    public bool TryAddItem(BaseItem item, bool animate = false)
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {
@@ -44,7 +44,7 @@ public class BaseInventory : MonoBehaviour, IModuleInit
 
                 item.transform.SetParent(transform);
 
-                HandleItemAdded(item);
+                HandleItemAdded(item, animate);
 
                 _itemList.Add(item);
 
@@ -128,7 +128,7 @@ public class BaseInventory : MonoBehaviour, IModuleInit
         return isThere;
     }
 
-    public virtual void HandleItemAdded(BaseItem item)
+    public virtual void HandleItemAdded(BaseItem item, bool animate = false)
     {
         item.gameObject.SetActive(false);
     }

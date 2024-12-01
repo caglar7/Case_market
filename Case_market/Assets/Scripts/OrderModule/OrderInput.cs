@@ -8,6 +8,10 @@ using UnityEngine.UI;
 public class OrderInput : MonoBehaviour 
 {
     public ProductData productType;
-    public int count;
     public TextMeshProUGUI txt;
+
+    private void OnEnable()
+     {
+        txt.text = "0";
+    }
 }

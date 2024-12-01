@@ -17,7 +17,7 @@ using UnityEngine;
 
 public class TransferManager : Singleton<TransferManager> 
 {
-    public void Transfer(BaseItem item, BaseInventory from, BaseInventory target)
+    public void Transfer(BaseItem item, BaseInventory from, BaseInventory target, bool animate)
     {
         if (IsTransferPossible(item, from, target) == false) 
         {
@@ -27,7 +27,7 @@ public class TransferManager : Singleton<TransferManager>
 
         from.TryRemoveItem(item);
 
-        target.TryAddItem(item);
+        target.TryAddItem(item, animate);
     }
 
 
