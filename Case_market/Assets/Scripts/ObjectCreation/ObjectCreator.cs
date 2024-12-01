@@ -7,6 +7,7 @@ public class ObjectCreator : Singleton<ObjectCreator>
     public PoolObject product1;
     public PoolObject product2;
     public PoolObject product3;
+    public PoolObject box;
 
     private PoolingPattern _poolCached;
 
@@ -26,5 +27,16 @@ public class ObjectCreator : Singleton<ObjectCreator>
     {
         _poolCached = item.itemData.poolObject.poolingPattern;
         _poolCached.AddObjToPool(item.gameObject);
+    }
+
+
+
+    public Box CreateBox()
+    {
+       return box.poolingPattern.PullObjFromPool<Box>(); 
+    }
+    public void Remove(Box boxToRemove)
+    {
+        box.poolingPattern.AddObjToPool(boxToRemove.gameObject);
     }
 }

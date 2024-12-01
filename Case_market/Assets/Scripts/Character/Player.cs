@@ -102,7 +102,7 @@ public class Player : BaseCharacter ,IEvents
     }
 
 
-    
+
 
     public void HandleKeyDownInput(KeyCode key)
     {
@@ -124,27 +124,9 @@ public class Player : BaseCharacter ,IEvents
         }
     }
 
-    private void TryDrop()
-    {
-        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
-        {
-            if (hit.collider.GetComponent<Player>() != null) continue;
-            if (hit.collider.GetComponent<BaseItem>() != null) continue;
-
-            if (hit.collider.TryGetComponent(out BaseInventory targetInv) == true)
-            {
-                BaseItem itemHolded = inventory.LastAddedItem;
-
-                TransferManager.instance.Transfer(itemHolded, inventory, targetInv);
-
-                break;
-            }
-        }
-    }
-
     private void TryCollect()
     {
-        BaseItem targetItem = null;
+        Product targetItem = null;
 
         BaseInventory targetInventory = null;
 
@@ -162,6 +144,25 @@ public class Player : BaseCharacter ,IEvents
             TransferManager.instance.Transfer(targetItem, targetInventory, inventory);
         }
     }
+
+    private void TryDrop()
+    {
+        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+        {
+            if (hit.collider.GetComponent<Player>() != null) continue;
+            if (hit.collider.GetComponent<Product>() != null) continue;
+
+            if (hit.collider.TryGetComponent(out BaseInventory targetInv) == true)
+            {
+                BaseItem itemHolded = inventory.LastAddedItem;
+
+                TransferManager.instance.Transfer(itemHolded, inventory, targetInv);
+
+                break;
+            }
+        }
+    }
+
 
     public void HandleKeyUpInput(KeyCode key)
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class BoxInventory : BaseInventory 
+public class StaticInventory : BaseInventory 
 {
     public Transform[] itemHolders;
 
