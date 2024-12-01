@@ -69,17 +69,6 @@ public class Player : BaseCharacter ,IEvents
     }
 
 
-    private void AdjustForUIMode()
-    {
-        DeActivateUpdate();
-        playerInput.UnRegisterToInputEvents();
-    }
-    private void AdjustForPlayerMode()
-    {
-        ActivateUpdate();
-        playerInput.RegisterToInputEvents();
-    }
-
 
     private void InitComponents()
     {
@@ -92,6 +81,9 @@ public class Player : BaseCharacter ,IEvents
         playerInput.RegisterToInputEvents();
         playerInput.OnKeyDown += HandleKeyDownInput;
         playerInput.OnKeyUp += HandleKeyUpInput;
+
+        UIEvents.OnOpenedUI += HandleOpenedUI;
+        UIEvents.OnClosedUI += HandleClosedUI;
     }
 
     public void UnRegisterToEvents()
@@ -99,9 +91,40 @@ public class Player : BaseCharacter ,IEvents
         playerInput.UnRegisterToInputEvents();
         playerInput.OnKeyDown -= HandleKeyDownInput;
         playerInput.OnKeyUp -= HandleKeyUpInput;
+
+        UIEvents.OnOpenedUI -= HandleOpenedUI;
+        UIEvents.OnClosedUI -= HandleClosedUI;
     }
 
+    private void HandleOpenedUI(CanvasType openedCanvas)
+    {
+        if(openedCanvas == CanvasType.Menu)
+        {
+            AdjustForUIMode();
+        }
+    }
+    private void HandleClosedUI(CanvasType closedCanvas)
+    {
+        if(closedCanvas == CanvasType.Menu)
+        {
+            AdjustForPlayerMode();
+        }
+    }
 
+    private void AdjustForUIMode()
+    {
+        DeActivateUpdate();
+        playerInput.UnRegisterToInputEvents();
+        CursorUtility.AdjustForUI();
+        Debug.Log("AdjustForUIMode");
+    }
+    private void AdjustForPlayerMode()
+    {
+        ActivateUpdate();
+        playerInput.RegisterToInputEvents();
+        CursorUtility.AdjustForPlayer();
+        Debug.Log("AdjustForPlayerMode");
+    }
 
 
     public void HandleKeyDownInput(KeyCode key)
@@ -109,6 +132,11 @@ public class Player : BaseCharacter ,IEvents
         if(key == KeyCode.E)
         {
             TryCollectAndDrop();
+        }
+
+        if(key == KeyCode.Escape)
+        {
+            UIManager.instance.SwitchCanvas(CanvasType.Menu);
         }
     }
 
