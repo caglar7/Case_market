@@ -686,6 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8e6e065d0cdd54d8ca35bc8c83085e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 6
   groundCheck: {fileID: 1411645724}
 --- !u!114 &1411645726
 MonoBehaviour:
@@ -720,6 +721,7 @@ MonoBehaviour:
   smoothTime: 0.02
   minClampY: -90
   maxClampY: 70
+  _moveDir: {x: 0, y: 0, z: 0}
 --- !u!136 &1411645728
 CapsuleCollider:
   m_ObjectHideFlags: 0

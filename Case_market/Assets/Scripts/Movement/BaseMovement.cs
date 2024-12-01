@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class BaseMovement : BaseMono, IModuleInit
 {
-    protected float currentSpeed;
+    public float speed;
 
     public Action onMovementStartedOnce;
     public Action onMovementStartedAlways;
@@ -72,6 +72,6 @@ public abstract class BaseMovement : BaseMono, IModuleInit
 
     public virtual void SetSpeed(float value)
     {
-        currentSpeed = value;
+        speed = value;
     }
 }

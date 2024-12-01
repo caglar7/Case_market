@@ -42,7 +42,7 @@ public class PlayerInput : MonoBehaviour,
         }
     }
 
-    private Vector3 _moveDir;
+    public Vector3 _moveDir;
     public Vector3 MoveDir
     {
         get
