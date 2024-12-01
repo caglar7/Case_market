@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb827caf80def7e439c2b43c71ff1ad4, type: 3}
   m_Name: Product 1
   m_EditorClassIdentifier: 
-  obj: {fileID: 0}
+  obj: {fileID: 2979144735073709133, guid: a665c241485314147ab4c337d43537f8, type: 3}
   poolName: 
   poolCount: 0

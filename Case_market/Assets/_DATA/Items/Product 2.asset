@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   itemName: Product 2
-  poolObject: {fileID: 0}
-  price: 0
+  poolObject: {fileID: 11400000, guid: 417928272e2d9124e9bc824bc940a708, type: 2}
+  price: 20
