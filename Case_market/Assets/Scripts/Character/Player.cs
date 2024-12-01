@@ -87,39 +87,6 @@ public class Player : BaseCharacter ,IEvents
         inventory.Init();
         cam.transform.localEulerAngles = Vector3.zero;
     }
-
-    public void HandleKeyDownInput(KeyCode key)
-    {
-        if(key == KeyCode.E)
-        {
-            if(inventory.IsThereEmptySlot() == true) // holding nothing
-            {
-                BaseItem targetItem = null;
-
-                BaseInventory targetInventory = null;
-
-                foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
-                {
-                    if(hit.collider.GetComponent<Player>() == this) continue;
-
-                    if(targetItem == null) hit.collider.TryGetComponent(out targetItem);
-
-                    if(targetInventory == null) hit.collider.TryGetComponent(out targetInventory);
-                }
-
-                if(targetItem != null && targetInventory != null)
-                {
-                    TransferManager.instance.Transfer(targetItem, targetInventory, inventory);
-                }
-            }
-     
-        }
-    }
-    public void HandleKeyUpInput(KeyCode key)
-    {
-
-    }
-
     public void RegisterToEvents()
     {
         playerInput.RegisterToInputEvents();
@@ -133,6 +100,74 @@ public class Player : BaseCharacter ,IEvents
         playerInput.OnKeyDown -= HandleKeyDownInput;
         playerInput.OnKeyUp -= HandleKeyUpInput;
     }
+
+
+    
+
+    public void HandleKeyDownInput(KeyCode key)
+    {
+        if(key == KeyCode.E)
+        {
+            TryCollectAndDrop();
+        }
+    }
+
+    private void TryCollectAndDrop()
+    {
+        if (inventory.IsThereEmptySlot() == true)    
+        {
+            TryCollect();
+        }
+        else
+        {
+            TryDrop();
+        }
+    }
+
+    private void TryDrop()
+    {
+        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+        {
+            if (hit.collider.GetComponent<Player>() != null) continue;
+            if (hit.collider.GetComponent<BaseItem>() != null) continue;
+
+            if (hit.collider.TryGetComponent(out BaseInventory targetInv) == true)
+            {
+                BaseItem itemHolded = inventory.LastAddedItem;
+
+                TransferManager.instance.Transfer(itemHolded, inventory, targetInv);
+
+                break;
+            }
+        }
+    }
+
+    private void TryCollect()
+    {
+        BaseItem targetItem = null;
+
+        BaseInventory targetInventory = null;
+
+        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+        {
+            if (hit.collider.GetComponent<Player>() != null) continue;
+
+            if (targetItem == null) hit.collider.TryGetComponent(out targetItem);
+
+            if (targetInventory == null) hit.collider.TryGetComponent(out targetInventory);
+        }
+
+        if (targetItem != null && targetInventory != null)
+        {
+            TransferManager.instance.Transfer(targetItem, targetInventory, inventory);
+        }
+    }
+
+    public void HandleKeyUpInput(KeyCode key)
+    {
+
+    }
+
 
 
 }

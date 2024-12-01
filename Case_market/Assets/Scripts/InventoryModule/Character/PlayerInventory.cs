@@ -1,6 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+
+
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerInventory : BaseInventory
 {
@@ -9,6 +10,9 @@ public class PlayerInventory : BaseInventory
     public override void HandleItemAdded(BaseItem item)
     {
         item.transform.SetParent(itemHolder);
-        item.transform.localPosition = Vector3.zero;
+
+        item.transform.DOLocalMove(Vector3.zero, .5f);
+
+        item.transform.DOLocalRotate(Vector3.zero, .5f);
     }
 }

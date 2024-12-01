@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using DG.Tweening;
 
 public class BoxInventory : BaseInventory 
 {
@@ -12,7 +13,10 @@ public class BoxInventory : BaseInventory
             if(itemHolders[i].childCount == 0)
             {
                 item.transform.SetParent(itemHolders[i]);
-                item.transform.localPosition = Vector3.zero;
+
+                item.transform.DOLocalMove(Vector3.zero, .5f);
+
+                item.transform.DOLocalRotate(Vector3.zero, .5f);
             }
         }
     }

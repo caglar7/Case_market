@@ -34,7 +34,7 @@ public class TransferManager : Singleton<TransferManager>
     private bool IsTransferPossible(BaseItem itemCheck, BaseInventory from, BaseInventory target)
     {
         return  itemCheck != null
-                && from.ContainsItem(itemCheck.itemData, out BaseItem item) == true 
+                // && from.ContainsItem(itemCheck.itemData, out BaseItem item) == true 
                 && target.IsThereEmptySlot() == true;
     }
 }

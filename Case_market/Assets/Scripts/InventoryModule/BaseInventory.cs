@@ -20,6 +20,9 @@ public class BaseInventory : MonoBehaviour, IModuleInit
         get {return _itemList;}
     }
 
+    public BaseItem LastAddedItem => _itemList[_itemList.Count - 1];
+
+
 
     public virtual void Init()
     {   
