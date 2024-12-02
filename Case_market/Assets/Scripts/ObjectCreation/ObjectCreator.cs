@@ -5,6 +5,7 @@ using Template;
 public class ObjectCreator : Singleton<ObjectCreator> 
 {
     public PoolObject boxPool;
+    public PoolObject customerPool;
 
     private PoolingPattern _poolCached;
 
@@ -28,5 +29,15 @@ public class ObjectCreator : Singleton<ObjectCreator>
     public void Remove(Box boxToRemove)
     {
         boxPool.poolingPattern.AddObjToPool(boxToRemove.gameObject);
+    }
+
+
+    public CustomerAI CreateCustomer()
+    {
+        return customerPool.poolingPattern.PullObjFromPool<CustomerAI>(); 
+    }
+    public void Remove(CustomerAI customerToRemove)
+    {
+        customerPool.poolingPattern.AddObjToPool(customerToRemove.gameObject);
     }
 }
