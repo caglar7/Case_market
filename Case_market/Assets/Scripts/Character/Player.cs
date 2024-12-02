@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using DG.Tweening;
 using Template;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +14,10 @@ public class Player : BaseCharacter ,IEvents
     public BaseInventory inventory;
     public PlayerInput playerInput;
     public Camera cam;
+    public Transform groundCheckPoint;
+
+    private BaseItem _itemOnHand;
+    private BaseInventory _inventoryTarget;
 
 
     public override void Init()
@@ -79,9 +85,7 @@ public class Player : BaseCharacter ,IEvents
     public void RegisterToEvents()
     {
         playerInput.RegisterToInputEvents();
-        playerInput.OnKeyDown += HandleKeyDownInput;
-        playerInput.OnKeyUp += HandleKeyUpInput;
-
+        InputManager.instance.onKeyDown += HandleKeyDownInput;
         UIEvents.OnOpenedUI += HandleOpenedUI;
         UIEvents.OnClosedUI += HandleClosedUI;
     }
@@ -89,9 +93,7 @@ public class Player : BaseCharacter ,IEvents
     public void UnRegisterToEvents()
     {
         playerInput.UnRegisterToInputEvents();
-        playerInput.OnKeyDown -= HandleKeyDownInput;
-        playerInput.OnKeyUp -= HandleKeyUpInput;
-
+        InputManager.instance.onKeyDown -= HandleKeyDownInput;
         UIEvents.OnOpenedUI -= HandleOpenedUI;
         UIEvents.OnClosedUI -= HandleClosedUI;
     }
@@ -124,12 +126,11 @@ public class Player : BaseCharacter ,IEvents
         CursorUtility.AdjustForPlayer();
     }
 
-
     public void HandleKeyDownInput(KeyCode key)
     {
         if(key == KeyCode.E)
         {
-            TryCollectAndDrop();
+            TryHoldAndDrop();
         }
 
         if(key == KeyCode.Q)
@@ -138,11 +139,11 @@ public class Player : BaseCharacter ,IEvents
         }
     }
 
-    private void TryCollectAndDrop()
+    private void TryHoldAndDrop()
     {
         if (inventory.IsThereEmptySlot() == true)    
         {
-            TryCollect();
+            TryHold();
         }
         else
         {
@@ -150,51 +151,84 @@ public class Player : BaseCharacter ,IEvents
         }
     }
 
-    private void TryCollect()
+    private void TryHold()
     {
-        Product targetItem = null;
+        BaseItem targetItem = GetTargetItem();
 
-        BaseInventory targetInventory = null;
-
-        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+        BaseInventory targetInventory = GetTargetInventory();
+        
+        switch(targetItem)
         {
-            if (hit.collider.GetComponent<Player>() != null) continue;
+            case Product product:
+                TransferManager.instance.Transfer(targetItem, targetInventory, inventory, true);
+                break;
 
-            if (targetItem == null) hit.collider.TryGetComponent(out targetItem);
-
-            if (targetInventory == null) hit.collider.TryGetComponent(out targetInventory);
-        }
-
-        if (targetItem != null && targetInventory != null)
-        {
-            TransferManager.instance.Transfer(targetItem, targetInventory, inventory, true);
+            case Box box:
+                inventory.TryAddItem(targetItem);
+                break;
         }
     }
 
     private void TryDrop()
     {
-        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+        BaseItem itemHolded = inventory.LastAddedItem;
+
+        BaseInventory targetInventory = GetTargetInventory();
+
+        switch(itemHolded)
         {
-            if (hit.collider.GetComponent<Player>() != null) continue;
-            if (hit.collider.GetComponent<Product>() != null) continue;
-
-            if (hit.collider.TryGetComponent(out BaseInventory targetInv) == true)
-            {
-                BaseItem itemHolded = inventory.LastAddedItem;
-
-                TransferManager.instance.Transfer(itemHolded, inventory, targetInv, true);
-
+            case Product product:
+                TransferManager.instance.Transfer(itemHolded, inventory, targetInventory, true);
                 break;
-            }
+
+            case Box box:
+                DropBoxOnGround(itemHolded);
+                break;
         }
     }
 
 
-    public void HandleKeyUpInput(KeyCode key)
+    private BaseItem GetTargetItem()
     {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 5f))
+        {
+            if (hit.collider.TryGetComponent(out BaseItem item))
+            {
+                return item;
+            }
+        }
 
+        return null;
     }
 
+    private BaseInventory GetTargetInventory()
+    {
+        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+        {
+            if(hit.collider.TryGetComponent(out BaseInventory target) == true)
+            {
+                return target;
+            }
+        }
 
+        return null;
+    }
 
+    private Vector3 _boxRotation;
+    private void DropBoxOnGround(BaseItem item)
+    {
+        foreach (RaycastHit hit in Physics.RaycastAll(groundCheckPoint.position, Vector3.down, 3f))
+        {
+            if(hit.collider.CompareTag("Ground") == true)
+            {
+                inventory.TryRemoveItem(item);
+
+                _boxRotation = item.transform.eulerAngles;
+
+                item.transform.DOMoveY(hit.point.y + 0.517f, .5f);
+
+                item.transform.DORotate(new Vector3(0f, _boxRotation.y, 0f), .5f);
+            }
+        }
+    }
 }

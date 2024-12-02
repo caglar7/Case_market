@@ -5,7 +5,7 @@ using System;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour, 
-                IInputMouseXY, IInputHorizontalVertical, IInputKeyDown, IInputKeyUp
+                IInputMouseXY, IInputHorizontalVertical
 {
 
     [Header("Settings")]
@@ -67,16 +67,12 @@ public class PlayerInput : MonoBehaviour,
     {
         InputManager.instance.onMouseXY += HandleMouseXYInput;
         InputManager.instance.onHorizontalVertical += HandleHorizontalVerticalInput;
-        InputManager.instance.onKeyDown += HandleKeyDownInput;
-        InputManager.instance.onKeyUp += HandleKeyUpInput;
     }
 
     public void UnRegisterToInputEvents()
     {
         InputManager.instance.onMouseXY -= HandleMouseXYInput;
         InputManager.instance.onHorizontalVertical -= HandleHorizontalVerticalInput;
-        InputManager.instance.onKeyDown -= HandleKeyDownInput;
-        InputManager.instance.onKeyUp -= HandleKeyUpInput;
     }
 
 
@@ -89,15 +85,6 @@ public class PlayerInput : MonoBehaviour,
         _moveDir.x = horizontal;
         _moveDir.z = vertical;
     }
-    public void HandleKeyDownInput(KeyCode key)
-    {
-        OnKeyDown?.Invoke(key);
-    }
-    public void HandleKeyUpInput(KeyCode key)
-    {
-        OnKeyUp?.Invoke(key);
-    }
-
 
     private void SetIncrementDirect(float mouseX, float mouseY)
     {

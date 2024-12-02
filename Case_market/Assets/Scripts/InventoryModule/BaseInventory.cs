@@ -15,12 +15,14 @@ public class BaseInventory : MonoBehaviour, IModuleInit
     [HideInInspector] public List<InventorySlot> inventorySlots;
 
     protected List<BaseItem> _itemList = new List<BaseItem>();
+
     public List<BaseItem> ItemList 
     {
         get {return _itemList;}
     }
 
-    public BaseItem LastAddedItem => _itemList[_itemList.Count - 1];
+    private BaseItem _lastAddedItem;
+    public BaseItem LastAddedItem => _lastAddedItem;
 
 
 
@@ -51,6 +53,8 @@ public class BaseInventory : MonoBehaviour, IModuleInit
                 OnInventorySlotUpdated?.Invoke(inventorySlots[i], i);
 
                 OnItemAdded?.Invoke(item);
+
+                _lastAddedItem = item;
 
                 return true;
             }

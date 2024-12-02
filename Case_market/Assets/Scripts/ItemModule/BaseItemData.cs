@@ -10,4 +10,5 @@ public class BaseItemData : ScriptableObject
     public Sprite icon;
     public string itemName;
     public PoolObject poolObject;
+    public float holdDistance = 1f;
 }
