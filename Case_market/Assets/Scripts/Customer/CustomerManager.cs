@@ -1,5 +1,6 @@
 
 
+using Sirenix.OdinInspector;
 using Template;
 using UnityEngine;
 
@@ -12,6 +13,6 @@ public class CustomerManager : Singleton<CustomerManager>, IModuleInit
 
     private void SpawnCustomer()
     {
-        
+
     }
 }
