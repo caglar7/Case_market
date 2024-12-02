@@ -178,7 +178,8 @@ public class Player : BaseCharacter ,IEvents
         switch(itemHolded)
         {
             case Product product:
-                TransferManager.instance.Transfer(itemHolded, inventory, targetInventory, true);
+                if(targetInventory != null)
+                    TransferManager.instance.Transfer(itemHolded, inventory, targetInventory, true);
                 break;
 
             case Box box:
