@@ -15,5 +15,8 @@ public class Shelves : BaseMono, IModuleInit
         inventory1.Init();
         inventory2.Init();
         ShelvesManager.instance.shelvesList.Add(this);
+
+        // add 1 or 2 items on the shelves
+        
     }
 }

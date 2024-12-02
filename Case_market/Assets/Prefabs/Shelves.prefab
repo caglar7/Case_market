@@ -336,8 +336,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1104130482274452739}
-  - component: {fileID: 1104130482274452740}
   - component: {fileID: 275043361838873435}
+  - component: {fileID: 304727361956219358}
   m_Layer: 0
   m_Name: Shelves
   m_TagString: Untagged
@@ -360,23 +360,10 @@ Transform:
   - {fileID: 1104130482648069456}
   - {fileID: 1104130481408186725}
   - {fileID: 1104130482665774272}
+  - {fileID: 368017175462444356}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1104130482274452740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104130482274452738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b947b1715ff7ab747916c497e908df73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory1: {fileID: 1104130481408186727}
-  inventory2: {fileID: 1104130482665774274}
 --- !u!208 &275043361838873435
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -393,6 +380,21 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.17, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &304727361956219358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104130482274452738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 251c4e213565bd047b1755e4d60f6f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory1: {fileID: 1104130481408186727}
+  inventory2: {fileID: 1104130482665774274}
+  agentWayPoint: {fileID: 368017175462444356}
 --- !u!1 &1104130482648069471
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,4 +652,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1104130482665774272}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2111820581312194544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 368017175462444356}
+  m_Layer: 0
+  m_Name: AgentWayPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &368017175462444356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111820581312194544}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.3, y: -0.5205045, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1104130482274452739}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

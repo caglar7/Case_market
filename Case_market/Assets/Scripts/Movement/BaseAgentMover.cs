@@ -22,6 +22,8 @@ public class BaseAgentMover : BaseMovement
         _agent.enabled = true;
 
         _agent.stoppingDistance = stoppingDistance;
+
+        SetSpeed(speed);
     }
 
 
