@@ -20,7 +20,7 @@ public class CustomerManager : Singleton<CustomerManager>, IModuleInit
     private void SpawnCustomer()
     {
         CustomerAI customer = ObjectCreator.instance.CreateCustomer();
-        customer.Init();
         customer.transform.name = "customer_" + _index++;
+        customer.Init();
     }
 }

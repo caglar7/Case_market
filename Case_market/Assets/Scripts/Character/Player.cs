@@ -37,7 +37,6 @@ public class Player : BaseCharacter ,IEvents
         UpdateInput();
         Rotate();
         Move();
-        Animate();
         UpdateComponents();
     }
 
@@ -59,12 +58,6 @@ public class Player : BaseCharacter ,IEvents
     {
         mover.Move(playerInput.MoveDir);
         mover.OnUpdate();
-    }
-
-    private void Animate()
-    {
-        // Animator.SetFloat("Horizontal", playerInput.MoveDir.x);
-        // Animator.SetFloat("Vertical", playerInput.MoveDir.z);
     }
 
     private void Rotate()
@@ -156,7 +149,7 @@ public class Player : BaseCharacter ,IEvents
         BaseItem targetItem = GetTargetItem();
 
         BaseInventory targetInventory = GetTargetInventory();
-        
+
         switch(targetItem)
         {
             case Product product:
@@ -191,7 +184,7 @@ public class Player : BaseCharacter ,IEvents
 
     private BaseItem GetTargetItem()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 5f))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 3.5f))
         {
             if (hit.collider.TryGetComponent(out BaseItem item))
             {
@@ -204,7 +197,7 @@ public class Player : BaseCharacter ,IEvents
 
     private BaseInventory GetTargetInventory()
     {
-        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 5f))
+        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 3.5f))
         {
             if(hit.collider.TryGetComponent(out BaseInventory target) == true)
             {

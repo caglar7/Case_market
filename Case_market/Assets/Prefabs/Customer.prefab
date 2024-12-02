@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 336105241236101618}
   - component: {fileID: 336105241236101612}
   - component: {fileID: 336105241236101619}
+  - component: {fileID: 6685499919827805678}
   m_Layer: 7
   m_Name: Customer
   m_TagString: Untagged
@@ -87,7 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isUpdateActive: 1
   mover: {fileID: 336105241236101619}
-  normalizedPathValue: 0
+  inventory: {fileID: 6685499919827805678}
 --- !u!114 &336105241236101619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +103,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   stoppingDistance: 0.5
+--- !u!114 &6685499919827805678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336105241236101625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45dba032ffb85c548a6a3cbccf8c114d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotCount: 3
+  inventorySlots: []
+  stackHolder: {fileID: 336105242617361147}
+  offsetY: 0.5
 --- !u!1 &336105242557373857
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 336105242617361147}
   m_Layer: 7
-  m_Name: ItemHolder
+  m_Name: StackInventoryHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,8 +174,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336105242617361146}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 1.635, z: 1.09}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.26, z: 1.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

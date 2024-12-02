@@ -14,16 +14,7 @@ public class StaticInventory : BaseInventory
             {
                 item.transform.SetParent(itemHolders[i]);
 
-                if(animate)
-                {
-                    item.transform.DOLocalMove(Vector3.zero, .5f);
-                    item.transform.DOLocalRotate(Vector3.zero, .5f);
-                }
-                else
-                {
-                    item.transform.localPosition = Vector3.zero;
-                    item.transform.localEulerAngles = Vector3.zero;
-                }
+                Animate(item, animate, Vector3.zero);
             }
         }
     }

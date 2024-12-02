@@ -1,11 +1,14 @@
 
 
+using System.Collections.Generic;
 using Template;
+using UnityEngine;
 
 public class ObjectCreator : Singleton<ObjectCreator> 
 {
     public PoolObject boxPool;
     public PoolObject customerPool;
+    public List<PoolObject> productPools = new List<PoolObject>();
 
     private PoolingPattern _poolCached;
 
@@ -19,6 +22,11 @@ public class ObjectCreator : Singleton<ObjectCreator>
     {
         _poolCached = item.itemData.poolObject.poolingPattern;
         _poolCached.AddObjToPool(item.gameObject);
+    }
+    public BaseItem CreateRandomProduct()
+    {
+        _poolCached = productPools[Random.Range(0, productPools.Count)].poolingPattern;
+        return _poolCached.PullObjFromPool<Product>();
     }
 
 

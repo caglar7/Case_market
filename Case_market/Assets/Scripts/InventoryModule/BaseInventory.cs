@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Template;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class BaseInventory : MonoBehaviour, IModuleInit
 
     public Action<InventorySlot, int> OnInventorySlotUpdated;
     public Action<BaseItem> OnItemAdded;
+    public Action<BaseItem> OnAnimationDone;
 
     [HideInInspector] public List<InventorySlot> inventorySlots;
 
@@ -131,6 +133,10 @@ public class BaseInventory : MonoBehaviour, IModuleInit
 
         return isThere;
     }
+    public bool IsThereAnyItem()
+    {
+        return _itemList.Count != 0 ? true : false;
+    }
 
     public virtual void HandleItemAdded(BaseItem item, bool animate = false)
     {
@@ -140,4 +146,27 @@ public class BaseInventory : MonoBehaviour, IModuleInit
     {
         item.transform.SetParent(null);
     }
+
+    public void Animate(BaseItem item, bool animate, Vector3 targetLocalPos)
+    {
+        if(animate)
+        {
+            item.transform.DOKill();
+
+            item.transform.DOLocalMove(targetLocalPos, .5f);
+
+            item.transform.DOLocalRotate(Vector3.zero, .5f)
+            .OnComplete(() => {
+                OnAnimationDone?.Invoke(item);
+            });
+
+        }
+        else
+        {
+            item.transform.localPosition = targetLocalPos;
+            item.transform.localEulerAngles = Vector3.zero;
+        }
+    }
+
+
 }

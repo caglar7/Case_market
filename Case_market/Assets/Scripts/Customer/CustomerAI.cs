@@ -6,17 +6,21 @@ using UnityEngine;
 public class CustomerAI : BaseCharacter
 {
     public AgentMoverPoint mover;
+    public BaseInventory inventory;
 
     private int indexInQueue => CustomerManager.instance.customersInQueue.IndexOf(this);
-
-    public float normalizedPathValue;
 
 
     public override void Init()
     {
         mover.Init();
 
-        GoToShelves();
+        Shelves shelves = ShelvesManager.instance.GetRandomShelves();
+
+        if(shelves != null)
+            GoToShelves(shelves);
+        else 
+            ObjectCreator.instance.Remove(this);
     }
 
     private void OnDisable() 
@@ -25,17 +29,18 @@ public class CustomerAI : BaseCharacter
     }
 
 
-    private void GoToShelves()
+    private void GoToShelves(Shelves shelves)
     {
-        mover.Move(ShelvesManager.instance.GetRandomShelves().agentWayPoint);  
+        shelves.occupied = true;
+
+        mover.Move(shelves.agentWayPoint);
 
         mover.onDestinationReachedOnce += CollectItemsFromShelves;  
     }
 
     private void CollectItemsFromShelves()
     {
-        // after collected some, listen for inventory events
-        GoToQueue();
+
     }
 
     [Button]
@@ -68,7 +73,6 @@ public class CustomerAI : BaseCharacter
         {
             CustomerEvents.OnCustomerLeft -= MoveInQueue;
         }
-
     }
 
     [Button]
@@ -85,7 +89,7 @@ public class CustomerAI : BaseCharacter
 
     private void MoveToCurrentIndexInQueue()
     {
-        normalizedPathValue = indexInQueue * (1f / CustomerSettings.Instance.queueLimit);
+        float normalizedPathValue = indexInQueue * (1f / CustomerSettings.Instance.queueLimit);
 
         Vector3 movePoint = Points.instance.path.GetPointOnPath(normalizedPathValue);
 

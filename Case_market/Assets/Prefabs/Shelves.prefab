@@ -110,8 +110,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.76532745, y: 0.49521875, z: 1.6825602}
-  m_Center: {x: 0.11733627, y: 0.1921382, z: 0}
+  m_Size: {x: 0.56275797, y: 0.71881866, z: 1.6825602}
+  m_Center: {x: 0.21862102, y: 0.30393815, z: 0}
 --- !u!114 &1104130481408186727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,9 +392,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251c4e213565bd047b1755e4d60f6f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory1: {fileID: 1104130481408186727}
-  inventory2: {fileID: 1104130482665774274}
+  inventoryList:
+  - {fileID: 1104130481408186727}
+  - {fileID: 1104130482665774274}
   agentWayPoint: {fileID: 368017175462444356}
+  occupied: 0
 --- !u!1 &1104130482648069471
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,8 +542,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.76532745, y: 0.49521875, z: 1.6825602}
-  m_Center: {x: 0.11733627, y: 0.1921382, z: 0}
+  m_Size: {x: 0.56275797, y: 0.71881866, z: 1.6825602}
+  m_Center: {x: 0.21862102, y: 0.30393815, z: 0}
 --- !u!114 &1104130482665774274
 MonoBehaviour:
   m_ObjectHideFlags: 0
