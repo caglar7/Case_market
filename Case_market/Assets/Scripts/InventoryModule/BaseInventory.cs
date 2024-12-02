@@ -12,7 +12,7 @@ public class BaseInventory : MonoBehaviour, IModuleInit
 
     public Action<InventorySlot, int> OnInventorySlotUpdated;
     public Action<BaseItem> OnItemAdded;
-    public Action<BaseItem> OnAnimationDone;
+    public Action OnAnimationDone;
 
     [HideInInspector] public List<InventorySlot> inventorySlots;
 
@@ -22,10 +22,13 @@ public class BaseInventory : MonoBehaviour, IModuleInit
     {
         get {return _itemList;}
     }
+    public BaseItem LastItem => _itemList[_itemList.Count - 1];
+
 
     private BaseItem _lastAddedItem;
     public BaseItem LastAddedItem => _lastAddedItem;
 
+    
 
 
     public virtual void Init()
@@ -157,7 +160,8 @@ public class BaseInventory : MonoBehaviour, IModuleInit
 
             item.transform.DOLocalRotate(Vector3.zero, .5f)
             .OnComplete(() => {
-                OnAnimationDone?.Invoke(item);
+                OnAnimationDone?.Invoke();
+                OnAnimationDone = null;
             });
 
         }

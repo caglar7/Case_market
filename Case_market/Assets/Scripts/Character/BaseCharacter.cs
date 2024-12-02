@@ -10,6 +10,8 @@ public abstract class BaseCharacter : BaseMono, IModuleInit
 
     public abstract void Init();
 
+    public abstract void Update();
+
     public virtual void ActivateUpdate()
     {
         isUpdateActive = true;

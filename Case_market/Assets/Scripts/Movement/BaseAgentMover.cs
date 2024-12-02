@@ -60,6 +60,8 @@ public class BaseAgentMover : BaseMovement
         onDestinationReachedOnce?.Invoke();
         onDestinationReachedOnce = null;
 
+        Debug.Log("onDestinationReachedOnce?.Invoke();");
+
         onDestinationReachedAlways?.Invoke();
     }
 

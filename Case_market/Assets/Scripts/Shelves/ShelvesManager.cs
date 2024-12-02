@@ -14,7 +14,8 @@ public class ShelvesManager : Singleton<ShelvesManager>
 
     public Shelves GetRandomShelves()
     {
-        _availableShelvesList = shelvesList.Where(item => item.occupied == false).ToList();
+        _availableShelvesList = shelvesList.
+                                    Where(item => item.occupied == false && item.IsThereProduct()).ToList();
 
         if(_availableShelvesList.Count == 0) return null;
 

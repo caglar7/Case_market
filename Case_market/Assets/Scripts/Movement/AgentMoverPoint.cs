@@ -39,7 +39,7 @@ public class AgentMoverPoint : BaseAgentMover
             if (IsInStoppingDistance() == true)
             {
                 if(_reachedDestination == true) return;
-                
+            
                 _reachedDestination = true;
 
                 ReachedDestination();

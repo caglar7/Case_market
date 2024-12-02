@@ -10,7 +10,7 @@ public class StackInventory : BaseInventory
 
     public override void HandleItemAdded(BaseItem item, bool animate = false)
     {
-        Vector3 targetLocalPos = Vector3.up * stackHolder.childCount;
+        Vector3 targetLocalPos = Vector3.up * offsetY * stackHolder.childCount;
 
         item.transform.SetParent(stackHolder);
 

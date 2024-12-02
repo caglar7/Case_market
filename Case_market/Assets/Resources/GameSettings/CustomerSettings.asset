@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3beb1ebd076281a4dbcc8208f9149af4, type: 3}
   m_Name: CustomerSettings
   m_EditorClassIdentifier: 
-  queueLimit: 4
+  queueLimit: 3

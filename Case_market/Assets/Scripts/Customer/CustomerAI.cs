@@ -10,10 +10,12 @@ public class CustomerAI : BaseCharacter
 
     private int indexInQueue => CustomerManager.instance.customersInQueue.IndexOf(this);
 
+    public Shelves _currentShelves;
 
     public override void Init()
     {
         mover.Init();
+        inventory.Init();
 
         Shelves shelves = ShelvesManager.instance.GetRandomShelves();
 
@@ -27,6 +29,11 @@ public class CustomerAI : BaseCharacter
     {
 
     }
+    public override void Update()
+    {
+        mover.OnUpdate();
+    }
+
 
 
     private void GoToShelves(Shelves shelves)
@@ -36,11 +43,36 @@ public class CustomerAI : BaseCharacter
         mover.Move(shelves.agentWayPoint);
 
         mover.onDestinationReachedOnce += CollectItemsFromShelves;  
+
+        _currentShelves = shelves;
     }
 
+    [Button]
     private void CollectItemsFromShelves()
     {
+        int collectCount = Random.Range(1, 4);
 
+        int collected = 0;
+
+        bool firstItemCollected = false;
+
+        collectCount = Mathf.Clamp(collectCount, 1, _currentShelves.GetItemCount());
+
+        foreach (BaseInventory inv in _currentShelves.inventoryList)
+        {
+            while(collected < collectCount && inv.IsThereAnyItem() == true)
+            {
+                TransferManager.instance.Transfer(inv.LastItem, inv, inventory, true);
+                collected++;
+
+                if(firstItemCollected == false)
+                {
+                    firstItemCollected = true;
+
+                    inventory.OnAnimationDone += GoToQueue;
+                }
+            }
+        }
     }
 
     [Button]
@@ -95,4 +127,6 @@ public class CustomerAI : BaseCharacter
 
         mover.Move(movePoint);
     }
+
+
 }

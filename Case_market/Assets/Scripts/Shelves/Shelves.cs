@@ -41,7 +41,6 @@ public class Shelves : BaseMono, IModuleInit
 
     public bool IsThereProduct()
     {
-
         foreach (BaseInventory inv in inventoryList)
         {   
             if(inv.IsThereAnyItem() == true)
@@ -50,6 +49,17 @@ public class Shelves : BaseMono, IModuleInit
             }
         }   
         return false;
+    }
+
+    public int GetItemCount()
+    {
+        int count = 0;
+
+        foreach (BaseInventory inv in inventoryList)
+        {   
+            count += inv.ItemList.Count;
+        } 
+        return count;  
     }
 
 }

@@ -13,7 +13,7 @@ public class Player : BaseCharacter ,IEvents
     public BaseMovement mover;
     public BaseInventory inventory;
     public PlayerInput playerInput;
-    public Camera cam;
+    public CameraUnit cameraUnit;
     public Transform groundCheckPoint;
 
     private BaseItem _itemOnHand;
@@ -30,7 +30,7 @@ public class Player : BaseCharacter ,IEvents
     {
         UnRegisterToEvents();
     }
-    void Update()
+    public override void Update()
     {
         if (isUpdateActive == false) return;
 
@@ -64,7 +64,7 @@ public class Player : BaseCharacter ,IEvents
     {
         // apply rotation
         TransformCached.rotation = Quaternion.Euler(0f, playerInput.BodyRotationY, 0f);
-        cam.transform.localRotation = Quaternion.Euler(playerInput.CamRotationX, 0f, 0f);
+        cameraUnit.transform.localRotation = Quaternion.Euler(playerInput.CamRotationX, 0f, 0f);
     }
 
 
@@ -73,7 +73,7 @@ public class Player : BaseCharacter ,IEvents
     {
         mover.Init();
         inventory.Init();
-        cam.transform.localEulerAngles = Vector3.zero;
+        cameraUnit.transform.localEulerAngles = Vector3.zero;
     }
     public void RegisterToEvents()
     {
@@ -184,7 +184,7 @@ public class Player : BaseCharacter ,IEvents
 
     private BaseItem GetTargetItem()
     {
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 3.5f))
+        if (Physics.Raycast(cameraUnit.transform.position, cameraUnit.transform.forward, out RaycastHit hit, 3.5f))
         {
             if (hit.collider.TryGetComponent(out BaseItem item))
             {
@@ -197,7 +197,7 @@ public class Player : BaseCharacter ,IEvents
 
     private BaseInventory GetTargetInventory()
     {
-        foreach (RaycastHit hit in Physics.RaycastAll(cam.transform.position, cam.transform.forward, 3.5f))
+        foreach (RaycastHit hit in Physics.RaycastAll(cameraUnit.transform.position, cameraUnit.transform.forward, 3.5f))
         {
             if(hit.collider.TryGetComponent(out BaseInventory target) == true)
             {
