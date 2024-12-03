@@ -8,7 +8,7 @@ using System;
 using System.Collections;
 using Sirenix.OdinInspector;
 
-public class CameraManager : MonoBehaviour, IModuleInit
+public class CameraManager : Singleton<CameraManager>, IModuleInit
 {
     public CinemachineBrain cinemachineBrain;
     

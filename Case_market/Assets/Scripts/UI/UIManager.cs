@@ -18,7 +18,6 @@ namespace Template
     public class UIManager : Singleton<UIManager>, IModuleInit
     {
         [Header("General")]
-        public CanvasType startPanel;
         private SubCanvas[] _subCanvases;
         public List<CanvasType> _currentOpenCanvases = new List<CanvasType>();
 
@@ -26,7 +25,9 @@ namespace Template
         {
             _subCanvases = GetComponentsInChildren<SubCanvas>(true);
             
-            SwitchCanvas(startPanel);
+            HideAll();
+            Show(CanvasType.Guide);
+            Show(CanvasType.Cursor);
         }
         private void OnDisable() 
         {
@@ -80,6 +81,13 @@ namespace Template
         {
             StartCoroutine(HideCo(target, initDelay));
         }
+        IEnumerator HideCo(CanvasType target, float initDelay)
+        {
+            yield return new WaitForSeconds(initDelay);
+
+            Hide(target);
+        }
+
         public void Hide(CanvasType target)
         {
             foreach (SubCanvas sub in _subCanvases)
@@ -92,11 +100,12 @@ namespace Template
 
             UIEvents.OnClosedUI?.Invoke(target);
         }
-        IEnumerator HideCo(CanvasType target, float initDelay)
+        public void HideAll()
         {
-            yield return new WaitForSeconds(initDelay);
-
-            Hide(target);
+            foreach (SubCanvas sub in _subCanvases)
+            {
+                DeActivateSubCanvas(sub);
+            }
         }
 
 
@@ -113,7 +122,8 @@ namespace Template
         {
             sub.gameObject.SetActive(false);
 
-            _currentOpenCanvases.Remove(sub.canvasType);
+            if(_currentOpenCanvases.Contains(sub.canvasType)) 
+                _currentOpenCanvases.Remove(sub.canvasType);
 
             UIEvents.OnClosedUI?.Invoke(sub.canvasType);
         }

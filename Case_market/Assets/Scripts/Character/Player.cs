@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using Template;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -106,18 +107,21 @@ public class Player : BaseCharacter ,IEvents
         }
     }
 
-    private void AdjustForUIMode()
+    [Button]
+    public void AdjustForUIMode()
     {
         DeActivateUpdate();
         playerInput.UnRegisterToInputEvents();
         CursorUtility.AdjustForUI();
     }
-    private void AdjustForPlayerMode()
+    [Button]
+    public void AdjustForPlayerMode()
     {
         ActivateUpdate();
         playerInput.RegisterToInputEvents();
         CursorUtility.AdjustForPlayer();
     }
+
 
     public void HandleKeyDownInput(KeyCode key)
     {
