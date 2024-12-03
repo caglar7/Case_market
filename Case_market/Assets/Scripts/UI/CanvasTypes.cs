@@ -6,7 +6,7 @@ namespace Template
 {
     public enum CanvasType
     {
-        Guide,
+        Game,
         Menu,
         PosMachineGuide,
         PosMachinePlay,

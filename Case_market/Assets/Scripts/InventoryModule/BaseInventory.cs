@@ -140,6 +140,15 @@ public class BaseInventory : MonoBehaviour, IModuleInit
     {
         return _itemList.Count != 0 ? true : false;
     }
+    public void ClearItems()
+    {
+        int count = _itemList.Count;
+        for (int i = 0; i < count; i++)
+        {
+            BaseItem item = _itemList[i];
+            ObjectCreator.instance.Remove(item);
+        }
+    }
 
     public virtual void HandleItemAdded(BaseItem item, bool animate = false)
     {

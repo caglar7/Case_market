@@ -46,6 +46,8 @@ public class ObjectCreator : Singleton<ObjectCreator>
     }
     public void Remove(CustomerAI customerToRemove)
     {
+        customerToRemove.inventory.ClearItems();
+        
         customerPool.poolingPattern.AddObjToPool(customerToRemove.gameObject);
     }
 }

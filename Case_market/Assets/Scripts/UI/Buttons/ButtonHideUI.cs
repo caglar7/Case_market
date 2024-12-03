@@ -4,7 +4,7 @@
 using Template;
 using UnityEngine;
 
-public class ButtonCloseUI : BaseClickButton
+public class ButtonHideUI : BaseClickButton
 {
     public CanvasType targetCanvas;
 

@@ -107,14 +107,12 @@ public class Player : BaseCharacter ,IEvents
         }
     }
 
-    [Button]
     public void AdjustForUIMode()
     {
         DeActivateUpdate();
         playerInput.UnRegisterToInputEvents();
         CursorUtility.AdjustForUI();
     }
-    [Button]
     public void AdjustForPlayerMode()
     {
         ActivateUpdate();
@@ -122,7 +120,7 @@ public class Player : BaseCharacter ,IEvents
         CursorUtility.AdjustForPlayer();
     }
 
-
+    private bool _canvasToggle = false;
     public void HandleKeyDownInput(KeyCode key)
     {
         if(key == KeyCode.E)
@@ -132,7 +130,8 @@ public class Player : BaseCharacter ,IEvents
 
         if(key == KeyCode.Q)
         {
-            UIManager.instance.SwitchCanvas(CanvasType.Menu);
+            UIManager.instance.Show(CanvasType.Menu);
+            UIManager.instance.Hide(CanvasType.Cursor);
         }
     }
 

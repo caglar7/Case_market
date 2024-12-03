@@ -49,7 +49,7 @@ public class PosMachine : MonoBehaviour, IModuleInit, ITriggerable, IEvents
                 break;
 
             case PosButtonType.Enter:
-                Debug.Log("Price: " + txt.text);
+                StopLookingPos();
                 CustomerEvents.OnPriceCalculated?.Invoke(int.Parse(txt.text));
                 break;
         }
@@ -80,30 +80,43 @@ public class PosMachine : MonoBehaviour, IModuleInit, ITriggerable, IEvents
         {
             if(_isOn == false)
             {
-                _isOn = true;
-
-                _player.AdjustForUIMode();
-
-                CameraManager.instance.CutToTarget(CameraAngleType.PosMachine);
-
-                UIManager.instance.Show(CanvasType.PosMachinePlay);
-                UIManager.instance.Hide(CanvasType.PosMachineGuide);
-                UIManager.instance.Hide(CanvasType.Cursor);
+                StartLookingPos();
             }
 
             else if(_isOn == true)  // pos OFF
             {
-                _isOn = false;
-
-                _player.AdjustForPlayerMode();
-
-                CameraManager.instance.CutToTarget(CameraAngleType.Player);
-
-                UIManager.instance.Show(CanvasType.Cursor);
-                UIManager.instance.Hide(CanvasType.PosMachinePlay);
+                StopLookingPos();
             }
         }
     }
+    
+    private void StartLookingPos()
+    {
+        _isOn = true;
+
+        ResetPosText();
+
+        _player.AdjustForUIMode();
+
+        CameraManager.instance.CutToTarget(CameraAngleType.PosMachine);
+
+        UIManager.instance.Hide(CanvasType.PosMachineGuide);
+        UIManager.instance.Hide(CanvasType.Cursor);
+        UIManager.instance.Show(CanvasType.PosMachinePlay);
+    }
+
+    private void StopLookingPos()
+    {
+        _isOn = false;
+
+        _player.AdjustForPlayerMode();
+
+        CameraManager.instance.CutToTarget(CameraAngleType.Player);
+
+        UIManager.instance.Hide(CanvasType.PosMachinePlay);
+        UIManager.instance.Show(CanvasType.Cursor);
+    }
+
 
     private void ResetPosText()
     {

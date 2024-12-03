@@ -15,4 +15,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   itemName: Product 3
   poolObject: {fileID: 11400000, guid: e8b7921810c2bf14caccdd6253925f9d, type: 2}
-  price: 30
+  holdDistance: 1
+  buyPrice: 15
+  sellPrice: 30

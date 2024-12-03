@@ -26,7 +26,7 @@ namespace Template
             _subCanvases = GetComponentsInChildren<SubCanvas>(true);
             
             HideAll();
-            Show(CanvasType.Guide);
+            Show(CanvasType.Game);
             Show(CanvasType.Cursor);
         }
         private void OnDisable() 
@@ -65,6 +65,7 @@ namespace Template
                 if (sub.canvasType == target)
                 {
                     ActivateSubCanvas(sub);
+                    break;
                 }
             }
         }
@@ -95,6 +96,7 @@ namespace Template
                 if (sub.canvasType == target)
                 {
                     DeActivateSubCanvas(sub);
+                    break;
                 }
             }
 

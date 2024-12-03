@@ -2,6 +2,7 @@
 
 using System.Collections;
 using Sirenix.OdinInspector;
+using Template;
 using UnityEngine;
 
 public class CustomerAI : BaseCharacter
@@ -15,20 +16,22 @@ public class CustomerAI : BaseCharacter
 
     public override void Init()
     {
+        TransformCached.position = Points.instance.npcSpawn.position;
         mover.Init();
         inventory.Init();
 
         Shelves shelves = ShelvesManager.instance.GetRandomShelves();
 
         if(shelves != null)
+        {
+            Debug.Log(transform.name + " go to shelves");
             GoToShelves(shelves);
+        }
         else 
+        {
+            Debug.Log(transform.name + " remove try spawn again");
             ObjectCreator.instance.Remove(this);
-    }
-
-    private void OnDisable() 
-    {
-        CustomerManager.instance.customersAll.Remove(this);
+        }
     }
     public override void Update()
     {
@@ -92,6 +95,8 @@ public class CustomerAI : BaseCharacter
     [Button]
     private void GoToQueue()
     {
+        _currentShelves.occupied = false;
+
         CustomerManager.instance.customersInQueue.Add(this);
 
         MoveToCurrentIndexInQueue();
@@ -112,23 +117,40 @@ public class CustomerAI : BaseCharacter
 
 
 
-
     private void WaitForPlayerIfFront()
     {
         if(indexInQueue == 0)
         {
             CustomerEvents.OnCustomerLeft -= MoveInQueue;
+
+            CustomerEvents.OnPriceCalculated += PayAndLeave;
         }
     }
-
-    [Button]
-    private void PayAndLeave()
+    private void PayAndLeave(int payment)
     {
+        if(payment >= 100)
+        {
+            Debug.Log("Payment is too much");
+            return;
+        }
+
+        SourceManager.instance.AddSource("Money", payment);
+
+        mover.Move(Points.instance.npcExit);
+
+        mover.onDestinationReachedOnce += RemoveCustomer;
+
         CustomerManager.instance.customersInQueue.Remove(this);
 
-        mover.Move(Points.instance.npcExit);// remove after seconds
-
         CustomerEvents.OnCustomerLeft?.Invoke(this);
+    }
+    private void RemoveCustomer()
+    {
+        CustomerManager.instance.customersAll.Remove(this);
+
+        CustomerEvents.OnPriceCalculated -= PayAndLeave;
+
+        ObjectCreator.instance.Remove(this);
     }
 
 

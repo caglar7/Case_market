@@ -16,25 +16,18 @@ public class CustomerManager : Singleton<CustomerManager>, IModuleInit
 
     public void Init()
     {
-        StartCoroutine(SpawnLogic());
+        InvokeRepeating("TrySpawnCustomer", 2f, 4f);
     }
 
-    IEnumerator SpawnLogic()
-    {
-        while(customersAll.Count < 5)
-        {
-            SpawnCustomer();
 
-            float wait = Random.Range(3f, 5f);
-            
-            yield return new WaitForSeconds(wait);
-        }
-    }
-
-    private void SpawnCustomer()
+    private void TrySpawnCustomer()
     {
+        if(customersAll.Count >= 5) return;
+
         CustomerAI customer = ObjectCreator.instance.CreateCustomer();
+
         customer.transform.name = "customer_" + _index++;
+        
         customer.Init();
 
         customersAll.Add(customer);
