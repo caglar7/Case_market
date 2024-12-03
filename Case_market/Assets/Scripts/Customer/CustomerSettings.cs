@@ -35,5 +35,5 @@ public class CustomerSettings : ScriptableObject
     }
 
     [Range(1, 10)]
-    public int queueLimit = 5;
+    public int queueLimit = 4;
 }

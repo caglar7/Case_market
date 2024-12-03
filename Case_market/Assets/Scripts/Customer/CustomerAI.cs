@@ -1,5 +1,6 @@
 
 
+using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public class CustomerAI : BaseCharacter
 
     private void OnDisable() 
     {
-
+        CustomerManager.instance.customersAll.Remove(this);
     }
     public override void Update()
     {
@@ -69,11 +70,24 @@ public class CustomerAI : BaseCharacter
                 {
                     firstItemCollected = true;
 
-                    inventory.OnAnimationDone += GoToQueue;
+                    inventory.OnAnimationDone += CheckQueue;
                 }
             }
         }
     }
+
+    private void CheckQueue() => StartCoroutine(CheckQueueCo());
+    IEnumerator CheckQueueCo()
+    {
+        while(CustomerManager.instance.customersInQueue.Count >= CustomerSettings.Instance.queueLimit)
+        {
+            yield return 1f;
+        }
+
+        yield return 1f;
+        GoToQueue();
+    }
+
 
     [Button]
     private void GoToQueue()

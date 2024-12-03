@@ -3205,6 +3205,7 @@ MonoBehaviour:
   - {fileID: 196301553}
   - {fileID: 903445853}
   - {fileID: 287430538}
+  - {fileID: 1408163512}
 --- !u!1 &784476010
 GameObject:
   m_ObjectHideFlags: 0
@@ -7045,6 +7046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customersInQueue: []
+  customersAll: []
 --- !u!1 &1411645722
 GameObject:
   m_ObjectHideFlags: 0
@@ -8297,7 +8299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b847b9cc945086458cb6b476857610a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPanel: 0
   _currentOpenCanvases: 
 --- !u!1 &1575933048
 GameObject:
