@@ -12,18 +12,21 @@ public class ObjectCreator : Singleton<ObjectCreator>
 
     private PoolingPattern _poolCached;
 
-    public BaseItem CreateProduct(ProductData productData)
-    {
-        _poolCached = productData.poolObject.poolingPattern;
-        return _poolCached.PullObjFromPool<Product>();
-    }
 
     public void Remove(BaseItem item)
     {
         _poolCached = item.itemData.poolObject.poolingPattern;
         _poolCached.AddObjToPool(item.gameObject);
     }
-    public BaseItem CreateRandomProduct()
+
+
+    public Product CreateProduct(ProductData productData)
+    {
+        _poolCached = productData.poolObject.poolingPattern;
+        return _poolCached.PullObjFromPool<Product>();
+    }
+
+    public Product CreateRandomProduct()
     {
         _poolCached = productPools[Random.Range(0, productPools.Count)].poolingPattern;
         return _poolCached.PullObjFromPool<Product>();

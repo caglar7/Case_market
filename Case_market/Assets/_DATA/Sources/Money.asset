@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sourceName: Money
   icon: {fileID: 21300000, guid: 895994c5ae1320d4da50e6964903f714, type: 3}
-  initialValue: 100
-  currentValue: 100
+  initialValue: 50
+  currentValue: 50

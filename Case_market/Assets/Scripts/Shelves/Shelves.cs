@@ -33,7 +33,11 @@ public class Shelves : BaseMono, IModuleInit
 
         for (int i = 0; i < count; i++)
         {
-            inv.TryAddItem(ObjectCreator.instance.CreateRandomProduct());
+            Product created =  ObjectCreator.instance.CreateRandomProduct();
+            
+            inv.TryAddItem(created);
+
+            StockEvents.OnAdded?.Invoke(created.itemData, 1);
 
             yield return 0;
         }

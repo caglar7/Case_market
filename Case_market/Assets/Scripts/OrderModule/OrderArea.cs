@@ -59,6 +59,8 @@ public class OrderArea : BaseMono, IModuleInit, IEvents
                 productList.RemoveAt(0);
 
                 box.inventory.TryAddItem(ObjectCreator.instance.CreateProduct(productData));
+
+                StockEvents.OnAdded?.Invoke(productData, 1);
             }
 
             inventory.TryAddItem(box);

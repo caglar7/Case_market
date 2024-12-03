@@ -66,7 +66,10 @@ public class CustomerAI : BaseCharacter
         {
             while(collected < collectCount && inv.IsThereAnyItem() == true)
             {
-                TransferManager.instance.Transfer(inv.LastItem, inv, inventory, true);
+                BaseItem itemRemoved = inv.LastItem;
+
+                TransferManager.instance.Transfer(itemRemoved, inv, inventory, true);
+                
                 collected++;
 
                 if(firstItemCollected == false)
@@ -75,6 +78,8 @@ public class CustomerAI : BaseCharacter
 
                     inventory.OnAnimationDone += CheckQueue;
                 }
+
+                StockEvents.OnRemoved?.Invoke(itemRemoved.itemData, 1);
             }
         }
     }
@@ -142,11 +147,12 @@ public class CustomerAI : BaseCharacter
 
         CustomerManager.instance.customersInQueue.Remove(this);
 
+        CustomerManager.instance.customersAll.Remove(this);
+        
         CustomerEvents.OnCustomerLeft?.Invoke(this);
     }
     private void RemoveCustomer()
     {
-        CustomerManager.instance.customersAll.Remove(this);
 
         CustomerEvents.OnPriceCalculated -= PayAndLeave;
 
